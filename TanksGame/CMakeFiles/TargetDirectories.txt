@@ -1,0 +1,5 @@
+D:/aStudy/C++/CppProjects/ProjectDev/sfml.4/CMakeFiles/edit_cache.dir
+D:/aStudy/C++/CppProjects/ProjectDev/sfml.4/CMakeFiles/rebuild_cache.dir
+D:/aStudy/C++/CppProjects/ProjectDev/sfml.4/00/CMakeFiles/00.dir
+D:/aStudy/C++/CppProjects/ProjectDev/sfml.4/00/CMakeFiles/edit_cache.dir
+D:/aStudy/C++/CppProjects/ProjectDev/sfml.4/00/CMakeFiles/rebuild_cache.dir
