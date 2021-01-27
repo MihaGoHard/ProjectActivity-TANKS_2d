@@ -94,56 +94,48 @@ sf::Vector2f calcBonusPosition(std::vector<std::vector<int>> map)
 }
 
 
-void initBonus(world &tanksWorld, int resetTime)
+void initBonus(world &tanksWorld)
 {   
-    sf::Vector2f bonusPosition = calcBonusPosition(tanksWorld.level.map);
-    
-    if (bonusPosition.x != 0 && bonusPosition.y != 0)
+    if (isBonusAppearCondition(tanksWorld)) 
     {
-        bonus bonus;
-        bonus.type = rand() % SPEED_BONUS + BOOM_BONUS;
-        bonus.resetTime = resetTime;
-        bonus.box.setSize(sf::Vector2f{TANK_WIDTH, TANK_HEIGHT});
-        switch (bonus.type)
-        {
-            case BOOM_BONUS:
-                bonus.box.setTexture(&boomBonusTexture);
-                break;
-            case TIME_BONUS:
-                bonus.box.setTexture(&timeBonusTexture);
-                break;
-            case ARMOR_BONUS:
-                bonus.box.setTexture(&baseBonusTexture);  
-                break;
-            case SPEED_BONUS:
-                bonus.box.setTexture(&speedBonusTexture);   
-                break;   
-        }        
-        bonus.box.setPosition(bonusPosition);
-        tanksWorld.bonusStruct.bonuses.push_back(bonus);
-        tanksWorld.time.bonusClock.restart().asSeconds();
+        sf::Vector2f bonusPosition = calcBonusPosition(tanksWorld.level.map);
         
-    }        
+        if (bonusPosition.x != 0 && bonusPosition.y != 0)
+        {
+            bonus bonus;
+            bonus.type = getRandInRange(BOOM_BONUS, SPEED_BONUS);
+            bonus.resetTime = BONUS_RESET_TIME;
+            bonus.box.setSize(sf::Vector2f{TANK_WIDTH, TANK_HEIGHT});
+            switch (bonus.type)
+            {
+                case BOOM_BONUS:
+                    bonus.box.setTexture(&boomBonusTexture);
+                    break;
+                case TIME_BONUS:
+                    bonus.box.setTexture(&timeBonusTexture);
+                    break;
+                case ARMOR_BONUS:
+                    bonus.box.setTexture(&baseBonusTexture);  
+                    break;
+                case SPEED_BONUS:
+                    bonus.box.setTexture(&speedBonusTexture);   
+                    break;   
+            }        
+            bonus.box.setPosition(bonusPosition);
+            tanksWorld.bonusStruct.bonuses.push_back(bonus);
+            tanksWorld.time.bonusClock.restart().asSeconds();        
+        }
+    }            
 }
 
 
-void initUpdateBonus(world &tanksWorld)
+void resetBonusEffect(world &tanksWorld)
 {
     sf::Clock &clock = tanksWorld.time.bonusClock;
-    std::vector<bonus> &bonuses = tanksWorld.bonusStruct.bonuses;
-
     int timeToShow = int(clock.getElapsedTime().asSeconds());
+    std::vector<bonus> bonuses = tanksWorld.bonusStruct.bonuses;
 
-    if (timeToShow % BONUS_APPEAR_TIME == 0 && timeToShow != 0 && bonuses.size() == 0 && tanksWorld.bonusStruct.activeBonus == NO_BONUS) 
-    {
-        initBonus(tanksWorld, BONUS_RESET_TIME);  
-    }    
-
-    if (tanksWorld.bonusStruct.activeBonus == BOOM_BONUS)
-    {
-        tanksWorld.bonusStruct.activeBonus = NO_BONUS; 
-    }       
-    else if (timeToShow == BONUS_EFFECT_LENGTH)
+    if (timeToShow == BONUS_EFFECT_LENGTH)
     {    
         std::vector<tank> &tanks= tanksWorld.tanks;
         switch(tanksWorld.bonusStruct.activeBonus)
@@ -180,13 +172,24 @@ void initUpdateBonus(world &tanksWorld)
                         tanks[j].state = SIMPLE;
                     }
                 }        
-                break;
-        }        
-        tanksWorld.bonusStruct.tankId = UNSET_ID;
-        tanksWorld.bonusStruct.activeBonus = NO_BONUS;
-        tanksWorld.time.bonusClock.restart().asSeconds();
-    }    
+                break;    
+        }
 
+        if (tanksWorld.bonusStruct.activeBonus != NO_BONUS)
+        {
+            tanksWorld.bonusStruct.tankId = UNSET_ID;
+            tanksWorld.bonusStruct.activeBonus = NO_BONUS;
+            tanksWorld.time.bonusClock.restart().asSeconds();
+        }    
+    }
+}
+
+
+void resetBonusByTime(world &tanksWorld)
+{
+    sf::Clock &clock = tanksWorld.time.bonusClock;
+    int timeToShow = int(clock.getElapsedTime().asSeconds());
+    std::vector<bonus> &bonuses = tanksWorld.bonusStruct.bonuses;
 
     for (int i = 0; i < bonuses.size(); i++)
     {
@@ -198,5 +201,15 @@ void initUpdateBonus(world &tanksWorld)
             }    
             bonuses.erase(bonuses.begin() + i);
         }    
-    }        
+    }
+}
+
+
+void initResetBonus(world &tanksWorld)
+{
+    initBonus(tanksWorld);      
+
+    resetBonusEffect(tanksWorld);
+
+    resetBonusByTime(tanksWorld);            
 }

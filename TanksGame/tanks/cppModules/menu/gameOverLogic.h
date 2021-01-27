@@ -1,9 +1,13 @@
 void initGameOver(gameOver &gameOver)
 {
-    sf::RectangleShape &gameOverImg = gameOver.gameOverImg;
-    gameOverImg.setSize(sf::Vector2f{GAME_OVER_WIDTH, GAME_OVER_HEIGHT});
-    gameOverImg.setPosition(GAME_OVER_START_POSITION_X, GAME_OVER_START_POSITION_Y);
-    gameOverImg.setTexture(&gameOverTexture);
+    if (!gameOver.gameOverInited)
+    {    
+        sf::RectangleShape &gameOverImg = gameOver.gameOverImg;
+        gameOverImg.setSize(sf::Vector2f{GAME_OVER_WIDTH, GAME_OVER_HEIGHT});
+        gameOverImg.setPosition(GAME_OVER_START_POSITION_X, GAME_OVER_START_POSITION_Y);
+        gameOverImg.setTexture(&gameOverTexture);
+        gameOver.gameOverInited = true;
+    }    
 }
 
 

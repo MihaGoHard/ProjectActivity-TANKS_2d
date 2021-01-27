@@ -12,7 +12,7 @@ void initLivesLabel(world &tanksWorld)
     sf::RectangleShape &livesLabel = tanksWorld.infoField.livesLabel;
     livesLabel.setSize(sf::Vector2f{LIVE_LABEL_WIDTH, LIVE_LABEL_HEIGHT});
     livesLabel.setPosition(LIVE_LABEL_START_POS_X, LIVE_LABEL_START_POS_Y);
-    livesLabel.setTexture(&live4LabelTexture); 
+    livesLabel.setTexture(&liveLabelTextures[tanksWorld.score.playerDestroyed]); 
 }
 
 
@@ -70,16 +70,8 @@ void updateTankLabels(world &tanksWorld)
 
 void updateLivesLabels(world &tanksWorld)
 {
-    if (tanksWorld.score.playerDestroyed == 1) 
+    if (tanksWorld.score.playerDestroyed < PLAYER_LIVES_NUM)
     {
-        tanksWorld.infoField.livesLabel.setTexture(&live3LabelTexture);
-    }    
-    if (tanksWorld.score.playerDestroyed == 2) 
-    {
-        tanksWorld.infoField.livesLabel.setTexture(&live2LabelTexture);
-    }    
-    if (tanksWorld.score.playerDestroyed == 3)
-    { 
-        tanksWorld.infoField.livesLabel.setTexture(&live1LabelTexture);  
-    }         
+        tanksWorld.infoField.livesLabel.setTexture(&liveLabelTextures[tanksWorld.score.playerDestroyed]);
+    }           
 }

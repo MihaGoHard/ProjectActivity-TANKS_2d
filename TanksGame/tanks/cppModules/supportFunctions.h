@@ -34,6 +34,17 @@ bool isCollisedWithBarrier(moveSolutionStruct moveSolution)
 }
 
 
+bool isBonusAppearCondition(world tanksWorld)
+{
+    sf::Clock &clock = tanksWorld.time.bonusClock;
+    std::vector<bonus> &bonuses = tanksWorld.bonusStruct.bonuses;
+    int timeToShow = int(clock.getElapsedTime().asSeconds());
+    int activeBonus = tanksWorld.bonusStruct.activeBonus;
+
+    return timeToShow % BONUS_APPEAR_TIME == 0 && timeToShow != 0 && bonuses.size() == 0 && activeBonus == NO_BONUS;
+}
+
+
 bool randIntEqualProbCondition(int randInt, int conditionType)
 {
     bool isEqual = false;

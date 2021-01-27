@@ -1,6 +1,8 @@
 const float MENU_WIDTH = 1200;
 const float MENU_HEIGHT = 800;
 
+const sf::Vector2f STAGE_LABEL_POSITION = {650, 350};
+
 const float MENU_OFFSET_X = 200;
 const float MENU_OFFSET_Y = 40;
 

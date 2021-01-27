@@ -1,3 +1,9 @@
+void mainMenuKeyboardEvents(sf::RenderWindow &window, mainMenu &mainMenu)
+{
+    mainMenu.control.enter = sf::Keyboard::isKeyPressed(sf::Keyboard::Return);
+}
+
+
 void initMainBackground(mainMenu &mainMenu)
 {
     sf::RectangleShape &mainBackground = mainMenu.mainBackground;
@@ -18,8 +24,12 @@ void initChoicePointer(mainMenu &mainMenu)
 
 void initMainMenu(mainMenu &mainMenu)
 {
-    initMainBackground(mainMenu);
-    initChoicePointer(mainMenu);
+    if (!mainMenu.mainMenuInited)
+    {
+        initMainBackground(mainMenu);
+        initChoicePointer(mainMenu);
+        mainMenu.mainMenuInited = true;
+    }    
 }
 
 

@@ -23,7 +23,8 @@
 #include "./constStructures/menuStruct.h"
 
 #include "./supportFunctions.h"
-#include "./textures.h"
+#include "./textures/texturesGlobal.h"
+#include "./textures/texturesInit.h"
 
 #include "./gamePlay/levels.h"
 
@@ -42,18 +43,18 @@
 
 
 
-
 #include "./gamePlay/barriersLogic.h"
 #include "./gamePlay/score.h"
 #include "./gamePlay/tanksWorldInit.h"
 #include "./gamePlay/draw.h"
 
 #include "./menu/mainMenuLogic.h"
-#include "./menu/mainMenuEventsSolutions.h"
 #include "./menu/gameOverLogic.h"
-#include "./menu/levelScoreInfo.h"
+#include "./menu/levelInfoLogic.h"
+#include "./menu/scoreInfoLogic.h"
 
 #include "./menu/draw.h"
 #include "./gameProcess.h"
+#include "./gameUpdate.h"
 #include "./gameControl.h"
 #include "./gameInit.h"

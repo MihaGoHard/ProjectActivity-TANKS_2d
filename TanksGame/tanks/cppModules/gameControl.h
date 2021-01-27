@@ -15,92 +15,19 @@ void gamePollEvents(sf::RenderWindow &window)
 }
 
 
-
-
-
-
 void updateGameControl(int &gameControl, gameStates &gameStates)
 {
-    gameStates.time.dt = gameStates.time.dtClock.restart().asSeconds();
-    sf::Clock &clock = gameStates.time.effectClock;
-    levelInfo &levelInfo = gameStates.levelInfo;
-    scoreInfo &scoreInfo = gameStates.scoreInfo;
-    gameOver &gameOver = gameStates.gameOver;
-    mainMenu &mainMenu = gameStates.mainMenu;
-    world &tanksWorld = gameStates.tanksWorld;
-    std::vector<levelData> &levels = gameStates.levels; 
+    gameStates.time.dt = gameStates.time.dtClock.restart().asSeconds(); 
 
-    switch (scoreInfo.nextState)
-    {
-        case NEXT_LEVEL:
-            scoreInfo.nextState = WAIT;
-            clock.restart().asSeconds();
-            tanksWorld.level = levels[tanksWorld.level.levelNumber + 1];
-            initTanksWorld(tanksWorld);
-            gameControl = SHOW_LEVEL;
-            break;             
-
-        case MAIN_MENU:
-            scoreInfo.nextState = WAIT;
-            clock.restart().asSeconds();
-            tanksWorld.level = levels[0];
-            gameControl = OPEN_MAIN_MENU;
-            break;    
-    }
- 
+    checkScoreInfoSetControl(gameControl, gameStates);
     
-
-    if (levelInfo.startGame)
-    {
-        gameControl = START_GAME_PLAY;
-        initTanksWorld(tanksWorld);
-        levelInfo.startGame = false;
-    }
-
-
-    if (gameOver.showScore) 
-    {
-        clock.restart().asSeconds();
-        gameControl = SHOW_SCORE_MENU_DEFEAT;
-        gameOver.showScore = false;
-    }
-
-
-    if (mainMenu.startGame) 
-    {
-        clock.restart().asSeconds();
-        gameControl = SHOW_LEVEL;
-        mainMenu.startGame = false;
-    }
-
-
-    if (tanksWorld.worldStatus == LOSS)
-    {
-        clock.restart().asSeconds();
-        gameControl = SHOW_GAME_OVER;
-        tanksWorld.worldStatus = GAMEPLAY;
-        initScoreInfo(gameStates.scoreInfo);
-    }
+    checkLevelInfoSetControl(gameControl, gameStates);
     
+    checkGameOveSetControl(gameControl, gameStates);
 
-    if (tanksWorld.worldStatus == WIN) 
-    {
-        tanksWorld.worldStatus = GAMEPLAY;
-        
-        int levelsNum = levels.size() - 1;
-
-        if (tanksWorld.level.levelNumber == levelsNum)
-        {
-            gameControl = OPEN_MAIN_MENU; 
-            gameStates.tanksWorld.level = gameStates.levels[START_LEVEL];   
-        }    
-        else
-        {
-            clock.restart().asSeconds();
-            gameControl = SHOW_SCORE_MENU_VICTORY;
-        }         
-        initScoreInfo(gameStates.scoreInfo);
-    }
+    checkMainMenuSetControl(gameControl, gameStates);
+    
+    checkGamePlaySetControl(gameControl, gameStates);
 }
 
 
@@ -136,4 +63,3 @@ void updateControlProcessState(sf::RenderWindow &window, int &gameControl, gameS
     updateGameControl(gameControl, gameStates);
     processGameState(window, gameControl, gameStates);
 }
-

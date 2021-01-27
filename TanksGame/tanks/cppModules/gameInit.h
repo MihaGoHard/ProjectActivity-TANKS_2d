@@ -12,7 +12,7 @@ void initGameStates(gameStates &gameStates, int &gameControl)
 
     initMainMenu(gameStates.mainMenu);
 
-    gameStates.tanksWorld.level = gameStates.levels[5];//START_LEVEL];
+    gameStates.tanksWorld.level = gameStates.levels[START_LEVEL];
 
     gameControl = OPEN_MAIN_MENU;
 }

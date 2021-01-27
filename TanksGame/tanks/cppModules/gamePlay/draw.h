@@ -44,7 +44,6 @@ void drawBarriers(sf::RenderWindow &window, world tanksWorld, float barrierKind)
     int intBarrierKind = barrierKind;
     if (tanksWorld.barriers.size() > 0)
     {
-
         switch (intBarrierKind)
         {
             case SIMPLE_BARRIER:
@@ -86,6 +85,7 @@ void drawTanks(sf::RenderWindow &window, world tanksWorld)
     }    
 }
 
+
 void drawShells(sf::RenderWindow &window, world tanksWorld)
 {
     for (int i = 0; i < tanksWorld.shells.size(); i++)
@@ -105,11 +105,13 @@ void drawInfoField(sf::RenderWindow &window, world tanksWorld)
     }    
 }
 
+
 void drawInfoBattleFields(sf::RenderWindow &window, world tanksWorld)
 {
     drawInfoField(window, tanksWorld);
     window.draw(tanksWorld.battleField);
 }
+
 
 void drawBonuses(sf::RenderWindow &window, std::vector<bonus> bonuses)
 {
@@ -118,6 +120,7 @@ void drawBonuses(sf::RenderWindow &window, std::vector<bonus> bonuses)
         window.draw(bonuses[i].box);
     }    
 }
+
 
 void drawTanksWorld(sf::RenderWindow &window, world &tanksWorld)
 {
