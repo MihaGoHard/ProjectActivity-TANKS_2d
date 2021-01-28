@@ -51,21 +51,21 @@ bool randIntEqualProbCondition(int randInt, int conditionType)
     switch (conditionType)
     {
         case MIDDLE_X_ATTACK:
-            if(randInt == 2 || randInt == 6 || randInt == 10)
+            if(randInt == 1 || randInt == 18)// || randInt == 10)
             {
                 isEqual = true;
             }
             break;
 
         case LEFT_X_ATTACK:
-            if (randInt == 2)
+            if (randInt == 12)
             {
                 isEqual = true;
             }
             break;
             
         case RIGHT_X_ATTACK:
-            if (randInt == 5)
+            if (randInt == 18)
             {
                 isEqual = true;
             }    
@@ -73,14 +73,14 @@ bool randIntEqualProbCondition(int randInt, int conditionType)
         
 
         case LEFT_X_SIMPLE_LEFT:
-            if (randInt == 6 || randInt == 10)
+            if (randInt == 6 || randInt == 18)
             {
                 isEqual = true;
             }
             break;
 
         case LEFT_X_SIMPLE_RIGHT:
-            if (randInt == 1 || randInt == 4 || randInt == 8)
+            if (randInt == 1 || randInt == 11)// || randInt == 8)
             {
                 isEqual = true;
             }
@@ -95,14 +95,14 @@ bool randIntEqualProbCondition(int randInt, int conditionType)
             
 
         case RIGHT_X_SIMPLE_LEFT:
-            if (randInt == 6 || randInt == 10 || randInt == 15)
+            if (randInt == 6 || randInt == 18 )//|| randInt == 15)
             {
                 isEqual = true;
             }
             break;
 
         case RIGHT_X_SIMPLE_RIGHT:
-            if (randInt == 1 || randInt == 4)
+            if (randInt == 1 || randInt == 11)
             {
                 isEqual = true;
             }

@@ -14,7 +14,7 @@ void getDirectBeforLimitX(sf::Vector2f tankPosition, int &direction)
     {
         direction = RIGHT;
     }    
-    else
+    else 
     { 
         direction = DOWN;
     }
@@ -46,7 +46,7 @@ void getDirectAfterLimitX(sf::Vector2f tankPosition, int &direction)
 
 int getDirectBeforAttackLimitY(sf::Vector2f tankPosition)
 {
-    int direction = UNSET_DIR;
+    int direction = STOP;
 
     int randInt = getRandInRange(probRanges::begin, probRanges::firstEnd);
 
@@ -118,7 +118,7 @@ void getDirectSidesAttackX(sf::Vector2f tankPosition, int &direction)
 }
 
 
-int getDirectAfterAttackLimitY(tank enemyTank, sf::Vector2f tankPosition)
+int getDirectAfterAttackLimitY(tank &enemyTank, sf::Vector2f tankPosition)
 {
     int direction = STOP;
 
@@ -134,18 +134,33 @@ int getDirectAfterAttackLimitY(tank enemyTank, sf::Vector2f tankPosition)
 }
 
 
+void setShootFreaquency(tank &enemyTank, int levelShootFreaquency)
+{
+    sf::Vector2f tankPosition = enemyTank.box.getPosition();
+
+    if (tankPosition.y > TANK_ATTAC_LIMIT_Y || enemyTank.direction == DOWN)
+    {
+        enemyTank.shootFreaquency = levelShootFreaquency / FAST_FREAQUENCY_INDEX;
+    }
+    else
+    {
+        enemyTank.shootFreaquency = levelShootFreaquency;
+    }
+}
+
+
 void checkAttackLimitSetTankProps(tank &enemyTank, int levelShootFreaquency)
 {
     sf::Vector2f tankPosition = enemyTank.box.getPosition();
     
     if (tankPosition.y <= TANK_ATTAC_LIMIT_Y)
     {
-        enemyTank.shootFreaquency = levelShootFreaquency;
         enemyTank.direction = getDirectBeforAttackLimitY(tankPosition);
     } 
     else
     {
-        enemyTank.shootFreaquency = levelShootFreaquency / FAST_FREAQUENCY_INDEX;
         enemyTank.direction = getDirectAfterAttackLimitY(enemyTank, tankPosition);
-    }   
+    }
+
+    setShootFreaquency(enemyTank, levelShootFreaquency);
 }
